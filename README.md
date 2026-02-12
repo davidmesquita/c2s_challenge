@@ -1,24 +1,24 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Rodando com Docker
 
-Things you may want to cover:
+Suba app + banco PostgreSQL:
 
-* Ruby version
+```bash
+docker compose up --build
+```
 
-* System dependencies
+A aplicação ficará disponível em `http://localhost:3000`.
 
-* Configuration
+Comandos úteis:
 
-* Database creation
+```bash
+# Subir em background
+docker compose up -d --build
 
-* Database initialization
+# Ver logs
+docker compose logs -f web
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Parar serviços
+docker compose down
+```
