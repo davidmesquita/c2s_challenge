@@ -1,0 +1,41 @@
+<div class="container">
+  <h2>Criar Conta</h2>
+  
+  <% if @user.errors.any? %>
+    <div class="errors">
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <%= form_with model: @user, url: signup_path, method: :post, local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :name, "Nome" %>
+      <%= f.text_field :name, required: true, autofocus: true, placeholder: "Seu nome completo" %>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :email, "Email" %>
+      <%= f.email_field :email, required: true, placeholder: "seu@email.com" %>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :password, "Senha" %>
+      <%= f.password_field :password, required: true, placeholder: "Mínimo 6 caracteres" %>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :password_confirmation, "Confirmar Senha" %>
+      <%= f.password_field :password_confirmation, required: true, placeholder: "Digite a senha novamente" %>
+    </div>
+    
+    <%= f.submit "Criar Conta", class: "btn" %>
+  <% end %>
+  
+  <div class="link-text">
+    Já tem uma conta? <%= link_to "Fazer login", login_path %>
+  </div>
+</div>

@@ -2,7 +2,16 @@
 
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+  echo " Preparando banco de dados..."
   ./bin/rails db:prepare
+  
+  # Run seeds in development environment
+  if [ "${RAILS_ENV}" == "development" ]; then
+    echo " Executando seeds..."
+    ./bin/rails db:seed
+  fi
+  
+  echo " Ambiente pronto!"
 fi
 
 exec "${@}"
