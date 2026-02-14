@@ -8,9 +8,59 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    
+    <style>
+      .navbar {
+        background: #333;
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      .navbar-brand {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+      }
+      .navbar-user {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .user-email {
+        color: #ddd;
+        font-size: 0.9rem;
+      }
+      .btn-logout {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+      .btn-logout:hover {
+        background: #c82333;
+      }
+    </style>
   </head>
 
   <body>
+    <% if logged_in? %>
+      <nav class="navbar">
+        <a href="<%= root_path %>" class="navbar-brand">🚗 Web Scraping Manager</a>
+        <div class="navbar-user">
+          <span class="user-email"><%= current_user.email %></span>
+          <%= button_to "Sair", logout_path, method: :delete, class: "btn-logout", form: { data: { turbo: false } } %>
+        </div>
+      </nav>
+    <% end %>
+    
     <%= yield %>
   </body>
 </html>
