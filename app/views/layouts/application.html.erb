@@ -8,201 +8,59 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      header {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        padding: 1rem 2rem;
+      .navbar {
+        background: #333;
         color: white;
+        padding: 1rem 2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       }
-      
-      header h1 {
-        font-size: 1.5rem;
-      }
-      
-      .user-info {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-      }
-      
-      .btn-logout {
-        background: rgba(255, 255, 255, 0.2);
+      .navbar-brand {
+        font-size: 1.25rem;
+        font-weight: bold;
         color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
         text-decoration: none;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        transition: all 0.3s;
       }
-      
-      .btn-logout:hover {
-        background: rgba(255, 255, 255, 0.3);
-      }
-      
-      main {
-        flex: 1;
+      .navbar-user {
         display: flex;
-        justify-content: center;
         align-items: center;
-        padding: 2rem;
+        gap: 1rem;
       }
-      
-      .container {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        padding: 2.5rem;
-        width: 100%;
-        max-width: 450px;
+      .user-email {
+        color: #ddd;
+        font-size: 0.9rem;
       }
-      
-      h2 {
-        color: #333;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        font-size: 1.8rem;
-      }
-      
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-      
-      label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #555;
-        font-weight: 500;
-      }
-      
-      input[type="text"],
-      input[type="email"],
-      input[type="password"] {
-        width: 100%;
-        padding: 0.875rem;
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: border-color 0.3s;
-      }
-      
-      input[type="text"]:focus,
-      input[type="email"]:focus,
-      input[type="password"]:focus {
-        outline: none;
-        border-color: #667eea;
-      }
-      
-      .btn {
-        width: 100%;
-        padding: 1rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      .btn-logout {
+        background: #dc3545;
         color: white;
         border: none;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
         cursor: pointer;
-        transition: transform 0.2s;
-      }
-      
-      .btn:hover {
-        transform: translateY(-2px);
-      }
-      
-      .alert {
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1.5rem;
-        text-align: center;
-      }
-      
-      .alert-success {
-        background: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-      }
-      
-      .alert-danger {
-        background: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-      }
-      
-      .link-text {
-        text-align: center;
-        margin-top: 1.5rem;
-        color: #666;
-      }
-      
-      .link-text a {
-        color: #667eea;
+        font-size: 0.9rem;
         text-decoration: none;
-        font-weight: 600;
       }
-      
-      .link-text a:hover {
-        text-decoration: underline;
-      }
-      
-      .errors {
-        background: #f8d7da;
-        color: #721c24;
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1.5rem;
-      }
-      
-      .errors ul {
-        list-style: none;
-      }
-      
-      .errors li {
-        margin-bottom: 0.5rem;
-      }
-      
-      .dashboard {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      
-      .dashboard h2 {
-        color: white;
-        margin-bottom: 2rem;
+      .btn-logout:hover {
+        background: #c82333;
       }
     </style>
   </head>
 
   <body>
     <% if logged_in? %>
-      <header>
-        <h1>🚗 Web Scraping Manager</h1>
-        <div class="user-info">
-          <span>Olá, <%= current_user.name %></span>
-          <%= link_to "Sair", logout_path, method: :delete, class: "btn-logout", data: { turbo_method: :delete } %>
+      <nav class="navbar">
+        <a href="<%= root_path %>" class="navbar-brand">🚗 Web Scraping Manager</a>
+        <div class="navbar-user">
+          <span class="user-email"><%= current_user.email %></span>
+          <%= button_to "Sair", logout_path, method: :delete, class: "btn-logout", form: { data: { turbo: false } } %>
         </div>
-      </header>
+      </nav>
     <% end %>
     
-    <main>
-      <%= yield %>
-    </main>
+    <%= yield %>
   </body>
 </html>
